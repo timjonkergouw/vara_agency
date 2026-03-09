@@ -41,16 +41,16 @@ type StaggeredMenuProps = {
 
 const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   position = "right",
-  colors = ["#B19EEF", "#5227FF"],
+  colors = ["#246bf6", "#92b5fb", "#d9f855"], // VARA brand colors: dark blue, light blue, lime
   items = [],
   socialItems = [],
   displaySocials = true,
   displayItemNumbering = true,
   className,
-  logoUrl = "/VARA%20LOGO.png",
+  logoUrl = "/VARA LOGO.png",
   menuButtonColor = "#fff",
   openMenuButtonColor = "#fff",
-  accentColor = "#5227FF",
+  accentColor = "#92B5FB", // VARA brand light blue
   changeMenuColorOnOpen = true,
   isFixed = true,
   closeOnClickAway = true,
@@ -458,10 +458,10 @@ const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
         })()}
       </div>
       <header className="staggered-menu-header" aria-label="Main navigation header">
-        <div className="sm-logo" aria-label="Logo">
+        <div className="sm-logo" aria-label="VARA Logo">
           <img
-            src={logoUrl || "/VARA%20LOGO.png"}
-            alt="Logo"
+            src={logoUrl || "/VARA LOGO.png"}
+            alt="VARA Logo"
             className="sm-logo-img"
             draggable={false}
             width={110}

@@ -7,6 +7,7 @@ const menuItems = [
   { label: "Home", ariaLabel: "Go to home page", link: "/" },
   { label: "About", ariaLabel: "Learn about us", link: "/#about" },
   { label: "Services", ariaLabel: "View our services", link: "/#services" },
+  { label: "Process", ariaLabel: "View our process", link: "/#process" },
   { label: "Contact", ariaLabel: "Get in touch", link: "/#contact" },
 ];
 
@@ -16,11 +17,11 @@ const socialItems = [
   { label: "LinkedIn", link: "https://linkedin.com" },
 ];
 
-const colors = ["#B19EEF", "#5227FF"];
-const logoUrl = "/VARA%20LOGO.png";
+const colors = ["#246bf6", "#92b5fb", "#d9f855"]; // VARA brand colors: dark blue, light blue, lime
+const logoUrl = "/VARA LOGO.png";
 const menuButtonColor = "#ffffff";
 const openMenuButtonColor = "#ffffff";
-const accentColor = "#5227FF";
+const accentColor = "#92B5FB"; // VARA brand light blue
 const position: "left" | "right" = "right";
 const displaySocials = true;
 const displayItemNumbering = true;
@@ -417,10 +418,10 @@ export function Header() {
         })()}
       </div>
       <header className="staggered-menu-header" aria-label="Main navigation header">
-        <div className="sm-logo" aria-label="Logo">
+        <div className="sm-logo" aria-label="VARA Logo">
           <img
             src={logoUrl}
-            alt="Logo"
+            alt="VARA Logo"
             className="sm-logo-img"
             draggable={false}
             width={110}
