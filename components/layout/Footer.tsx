@@ -1,3 +1,5 @@
+import { montserrat, tomorrow } from "@/app/fonts";
+
 export function Footer() {
   return (
     <footer
@@ -6,15 +8,17 @@ export function Footer() {
     >
       <div className="mx-auto flex max-w-6xl flex-col gap-10 px-6 md:flex-row md:justify-between md:px-8">
         <div className="space-y-3">
-          <h3 className="font-heading text-sm font-extrabold uppercase tracking-[0.24em] text-brand-dark">
+          <h3
+            className={`${montserrat.className} text-sm font-extrabold uppercase tracking-[0.24em] text-brand-dark`}
+          >
             Contact
           </h3>
-          <p className="font-body max-w-xs leading-relaxed">
+          <p className={`${tomorrow.className} max-w-xs leading-relaxed`}>
             Redefinestreet 1, 5612 MA
             <br />
             Eindhoven
           </p>
-          <p className="font-body leading-relaxed">
+          <p className={`${tomorrow.className} leading-relaxed`}>
             +31 (0) 6 123 1212
             <br />
             info@vara.nl
@@ -23,7 +27,9 @@ export function Footer() {
 
         <div className="grid flex-1 grid-cols-2 gap-8 md:grid-cols-3">
           <div>
-            <h3 className="font-heading text-sm font-extrabold uppercase tracking-[0.24em] text-brand-dark">
+            <h3
+              className={`${montserrat.className} text-sm font-extrabold uppercase tracking-[0.24em] text-brand-dark`}
+            >
               About
             </h3>
             <ul className="mt-3 space-y-1">
@@ -32,7 +38,9 @@ export function Footer() {
             </ul>
           </div>
           <div>
-            <h3 className="font-heading text-sm font-extrabold uppercase tracking-[0.24em] text-brand-dark">
+            <h3
+              className={`${montserrat.className} text-sm font-extrabold uppercase tracking-[0.24em] text-brand-dark`}
+            >
               Services
             </h3>
             <ul className="mt-3 space-y-1">
@@ -42,7 +50,9 @@ export function Footer() {
             </ul>
           </div>
           <div>
-            <h3 className="font-heading text-sm font-extrabold uppercase tracking-[0.24em] text-brand-dark">
+            <h3
+              className={`${montserrat.className} text-sm font-extrabold uppercase tracking-[0.24em] text-brand-dark`}
+            >
               Process
             </h3>
             <ul className="mt-3 space-y-1">
@@ -55,7 +65,7 @@ export function Footer() {
       </div>
 
       <div className="relative mx-auto mt-10 flex max-w-6xl items-end justify-between px-6 md:px-8">
-        <div className="space-y-2">
+        <div className={`${tomorrow.className} space-y-2`}>
           <p className="text-[11px] uppercase tracking-[0.24em] text-brand-dark/60">
             Branding for the next generation of startups
           </p>

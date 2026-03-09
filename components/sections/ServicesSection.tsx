@@ -1,3 +1,4 @@
+import { montserrat, tomorrow } from "@/app/fonts";
 const services = [
   {
     title: "Brand Identity",
@@ -14,7 +15,9 @@ export function ServicesSection() {
   return (
     <section id="services" className="mx-auto mt-24 max-w-6xl px-6 md:mt-28 md:px-8">
       <header className="flex items-end justify-between gap-4">
-        <h2 className="font-heading text-(--text-heading-section) font-extrabold uppercase tracking-[0.24em] text-brand-dark">
+        <h2
+          className={`${montserrat.className} text-(--text-heading-section) font-extrabold uppercase tracking-[0.24em] text-brand-dark`}
+        >
           Services.
         </h2>
       </header>
@@ -28,7 +31,9 @@ export function ServicesSection() {
             <div className="flex flex-1 items-center justify-center border border-dashed border-brand-dark/30 bg-bg-offwhite">
               <div className="h-20 w-24 border border-brand-dark/25" />
             </div>
-            <h3 className="font-heading text-xs font-extrabold uppercase tracking-[0.24em] text-brand-dark">
+            <h3
+              className={`${montserrat.className} text-xs font-extrabold uppercase tracking-[0.24em] text-brand-dark`}
+            >
               {service.title}
             </h3>
           </article>
@@ -36,7 +41,9 @@ export function ServicesSection() {
       </div>
 
       <div className="mt-10">
-        <button className="font-heading rounded-sm bg-brand-lime px-7 py-3 text-[11px] font-extrabold uppercase tracking-[0.24em] text-brand-dark shadow-[0_8px_0_rgba(0,0,0,0.12)] transition hover:-translate-y-0.5 hover:shadow-[0_10px_0_rgba(0,0,0,0.16)]">
+        <button
+          className={`${montserrat.className} rounded-sm bg-brand-lime px-7 py-3 text-[11px] font-extrabold uppercase tracking-[0.24em] text-brand-dark shadow-[0_8px_0_rgba(0,0,0,0.12)] transition hover:-translate-y-0.5 hover:shadow-[0_10px_0_rgba(0,0,0,0.16)]`}
+        >
           Learn more+
         </button>
       </div>

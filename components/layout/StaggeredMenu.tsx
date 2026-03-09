@@ -1,34 +1,62 @@
-"use client";
+'use client';
 
-import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { gsap } from "gsap";
 
-const menuItems = [
-  { label: "Home", ariaLabel: "Go to home page", link: "/" },
-  { label: "About", ariaLabel: "Learn about us", link: "/#about" },
-  { label: "Services", ariaLabel: "View our services", link: "/#services" },
-  { label: "Contact", ariaLabel: "Get in touch", link: "/#contact" },
-];
+type MenuItem = {
+  label: string;
+  ariaLabel?: string;
+  link: string;
+};
 
-const socialItems = [
-  { label: "Twitter", link: "https://twitter.com" },
-  { label: "GitHub", link: "https://github.com" },
-  { label: "LinkedIn", link: "https://linkedin.com" },
-];
+type SocialItem = {
+  label: string;
+  link: string;
+};
 
-const colors = ["#B19EEF", "#5227FF"];
-const logoUrl = "/VARA%20LOGO.png";
-const menuButtonColor = "#ffffff";
-const openMenuButtonColor = "#ffffff";
-const accentColor = "#5227FF";
-const position: "left" | "right" = "right";
-const displaySocials = true;
-const displayItemNumbering = true;
-const changeMenuColorOnOpen = true;
-const isFixed = true;
-const closeOnClickAway = true;
+type StaggeredMenuProps = {
+  position?: "left" | "right";
+  colors?: string[];
+  items?: MenuItem[];
+  socialItems?: SocialItem[];
+  displaySocials?: boolean;
+  displayItemNumbering?: boolean;
+  className?: string;
+  logoUrl?: string;
+  menuButtonColor?: string;
+  openMenuButtonColor?: string;
+  accentColor?: string;
+  changeMenuColorOnOpen?: boolean;
+  isFixed?: boolean;
+  closeOnClickAway?: boolean;
+  onMenuOpen?: () => void;
+  onMenuClose?: () => void;
+};
 
-export function Header() {
+const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
+  position = "right",
+  colors = ["#B19EEF", "#5227FF"],
+  items = [],
+  socialItems = [],
+  displaySocials = true,
+  displayItemNumbering = true,
+  className,
+  logoUrl = "/VARA%20LOGO.png",
+  menuButtonColor = "#fff",
+  openMenuButtonColor = "#fff",
+  accentColor = "#5227FF",
+  changeMenuColorOnOpen = true,
+  isFixed = true,
+  closeOnClickAway = true,
+  onMenuOpen,
+  onMenuClose,
+}) => {
   const [open, setOpen] = useState(false);
   const openRef = useRef(false);
   const panelRef = useRef<HTMLDivElement | null>(null);
@@ -78,7 +106,7 @@ export function Header() {
         gsap.set(toggleBtnRef.current, { color: menuButtonColor });
     });
     return () => ctx.revert();
-  }, []);
+  }, [menuButtonColor, position]);
 
   const buildOpenTimeline = useCallback(() => {
     const panel = panelRef.current;
@@ -265,7 +293,7 @@ export function Header() {
         busyRef.current = false;
       },
     });
-  }, []);
+  }, [position]);
 
   const animateIcon = useCallback((opening: boolean) => {
     const icon = iconRef.current;
@@ -305,7 +333,7 @@ export function Header() {
         gsap.set(btn, { color: menuButtonColor });
       }
     },
-    [],
+    [openMenuButtonColor, menuButtonColor, changeMenuColorOnOpen],
   );
 
   useEffect(() => {
@@ -319,7 +347,7 @@ export function Header() {
         gsap.set(toggleBtnRef.current, { color: menuButtonColor });
       }
     }
-  }, []);
+  }, [changeMenuColorOnOpen, menuButtonColor, openMenuButtonColor]);
 
   const animateText = useCallback((opening: boolean) => {
     const inner = textInnerRef.current;
@@ -354,25 +382,36 @@ export function Header() {
     openRef.current = target;
     setOpen(target);
     if (target) {
+      onMenuOpen?.();
       playOpen();
     } else {
+      onMenuClose?.();
       playClose();
     }
     animateIcon(target);
     animateColor(target);
     animateText(target);
-  }, [playOpen, playClose, animateIcon, animateColor, animateText]);
+  }, [
+    playOpen,
+    playClose,
+    animateIcon,
+    animateColor,
+    animateText,
+    onMenuOpen,
+    onMenuClose,
+  ]);
 
   const closeMenu = useCallback(() => {
     if (openRef.current) {
       openRef.current = false;
       setOpen(false);
+      onMenuClose?.();
       playClose();
       animateIcon(false);
       animateColor(false);
       animateText(false);
     }
-  }, [playClose, animateIcon, animateColor, animateText]);
+  }, [playClose, animateIcon, animateColor, animateText, onMenuClose]);
 
   useEffect(() => {
     if (!closeOnClickAway || !open) return;
@@ -392,12 +431,14 @@ export function Header() {
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [open, closeMenu]);
+  }, [closeOnClickAway, open, closeMenu]);
 
   return (
     <div
       className={
-        "staggered-menu-wrapper" + (isFixed ? " fixed-wrapper" : "")
+        (className ? className + " " : "") +
+        "staggered-menu-wrapper" +
+        (isFixed ? " fixed-wrapper" : "")
       }
       style={accentColor ? { ["--sm-accent" as string]: accentColor } : undefined}
       data-position={position}
@@ -405,7 +446,7 @@ export function Header() {
     >
       <div ref={preLayersRef} className="sm-prelayers" aria-hidden="true">
         {(() => {
-          const raw = colors.length ? colors.slice(0, 4) : ["#1e1e22", "#35353c"];
+          const raw = colors && colors.length ? colors.slice(0, 4) : ["#1e1e22", "#35353c"];
           let arr = [...raw];
           if (arr.length >= 3) {
             const mid = Math.floor(arr.length / 2);
@@ -419,7 +460,7 @@ export function Header() {
       <header className="staggered-menu-header" aria-label="Main navigation header">
         <div className="sm-logo" aria-label="Logo">
           <img
-            src={logoUrl}
+            src={logoUrl || "/VARA%20LOGO.png"}
             alt="Logo"
             className="sm-logo-img"
             draggable={false}
@@ -464,8 +505,8 @@ export function Header() {
             role="list"
             data-numbering={displayItemNumbering || undefined}
           >
-            {menuItems.length ? (
-              menuItems.map((it, idx) => (
+            {items && items.length ? (
+              items.map((it, idx) => (
                 <li className="sm-panel-itemWrap" key={it.label + idx}>
                   <a
                     className="sm-panel-item"
@@ -485,7 +526,7 @@ export function Header() {
               </li>
             )}
           </ul>
-          {displaySocials && socialItems.length > 0 && (
+          {displaySocials && socialItems && socialItems.length > 0 && (
             <div className="sm-socials" aria-label="Social links">
               <h3 className="sm-socials-title">Socials</h3>
               <ul className="sm-socials-list" role="list">
@@ -508,5 +549,7 @@ export function Header() {
       </aside>
     </div>
   );
-}
+};
+
+export default StaggeredMenu;
 

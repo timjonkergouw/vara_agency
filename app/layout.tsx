@@ -1,37 +1,13 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { Montserrat, Tomorrow } from "next/font/google";
 import "./globals.css";
+import "./StaggeredMenu.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { AboutSection } from "@/components/sections/AboutSection";
 import { ServicesSection } from "@/components/sections/ServicesSection";
 import { ProcessSection } from "@/components/sections/ProcessSection";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-const montserrat = Montserrat({
-  variable: "--font-montserrat",
-  weight: "800", // ExtraBold for headings
-  subsets: ["latin"],
-  display: "swap",
-});
-
-const tomorrow = Tomorrow({
-  variable: "--font-tomorrow",
-  weight: "400",
-  subsets: ["latin"],
-  display: "swap",
-});
+import { montserrat, tomorrow } from "@/app/fonts";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -46,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} ${tomorrow.variable} antialiased bg-bg-offwhite text-brand-dark`}
+        className={`${tomorrow.className} antialiased bg-bg-offwhite text-brand-dark`}
       >
         <div className="min-h-screen bg-bg-offwhite bg-[url('/Background%20website.png')] bg-cover bg-fixed bg-center">
           <Header />

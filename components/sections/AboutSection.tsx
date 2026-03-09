@@ -1,17 +1,25 @@
+import { montserrat, tomorrow } from "@/app/fonts";
+
 export function AboutSection() {
   return (
     <section id="about" className="mx-auto mt-4 max-w-6xl px-6 md:px-8">
       <div className="relative overflow-visible rounded-none bg-brand-blue px-6 py-10 text-white md:px-10 md:py-14">
         <div className="max-w-xl space-y-4">
-          <h2 className="font-heading text-(--text-heading-section) font-extrabold uppercase tracking-[0.24em]">
+          <h2
+            className={`${montserrat.className} text-(--text-heading-section) font-extrabold uppercase tracking-[0.24em]`}
+          >
             About Vara.
           </h2>
-          <p className="font-body text-(--text-body-base) leading-relaxed text-white/90 md:text-(--text-body-large)">
+          <p
+            className={`${tomorrow.className} text-(--text-body-base) leading-relaxed text-white/90 md:text-(--text-body-large)`}
+          >
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. In elementum quam
             nec lorem blandit tristique. Nam sagittis lectus porta luctus finibus.
             Etiam fringilla quis dolor at auctor.
           </p>
-          <p className="font-body text-(--text-body-base) leading-relaxed text-white/80 md:text-(--text-body-large)">
+          <p
+            className={`${tomorrow.className} text-(--text-body-base) leading-relaxed text-white/80 md:text-(--text-body-large)`}
+          >
             Duis ornare suscipit imperdiet. Phasellus eleifend lorem vel tellus quis
             pharetra. Nullam id sodales erat, at pellentesque odio. In luctus, neque eu
             convallis commodo, nisl ante tempus erat, at semper turpis lorem nisi.
