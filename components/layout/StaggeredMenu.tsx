@@ -48,8 +48,8 @@ const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   displayItemNumbering = true,
   className,
   logoUrl = "/VARA LOGO.png",
-  menuButtonColor = "#fff",
-  openMenuButtonColor = "#fff",
+  menuButtonColor = "#343231", // brand black
+  openMenuButtonColor = "#343231",
   accentColor = "#92B5FB", // VARA brand light blue
   changeMenuColorOnOpen = true,
   isFixed = true,
@@ -62,8 +62,9 @@ const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   const panelRef = useRef<HTMLDivElement | null>(null);
   const preLayersRef = useRef<HTMLDivElement | null>(null);
   const preLayerElsRef = useRef<HTMLDivElement[]>([]);
-  const plusHRef = useRef<HTMLSpanElement | null>(null);
-  const plusVRef = useRef<HTMLSpanElement | null>(null);
+  const topLineRef = useRef<HTMLSpanElement | null>(null);
+  const midLineRef = useRef<HTMLSpanElement | null>(null);
+  const bottomLineRef = useRef<HTMLSpanElement | null>(null);
   const iconRef = useRef<HTMLSpanElement | null>(null);
   const textInnerRef = useRef<HTMLSpanElement | null>(null);
   const textWrapRef = useRef<HTMLSpanElement | null>(null);
@@ -71,7 +72,9 @@ const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 
   const openTlRef = useRef<gsap.core.Timeline | null>(null);
   const closeTweenRef = useRef<gsap.core.Tween | null>(null);
-  const spinTweenRef = useRef<gsap.core.Tween | null>(null);
+  const spinTweenRef = useRef<gsap.core.Tween | gsap.core.Timeline | null>(
+    null,
+  );
   const textCycleAnimRef = useRef<gsap.core.Tween | null>(null);
   const colorTweenRef = useRef<gsap.core.Tween | null>(null);
   const toggleBtnRef = useRef<HTMLButtonElement | null>(null);
@@ -82,11 +85,13 @@ const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
     const ctx = gsap.context(() => {
       const panel = panelRef.current;
       const preContainer = preLayersRef.current;
-      const plusH = plusHRef.current;
-      const plusV = plusVRef.current;
+      const topLine = topLineRef.current;
+      const midLine = midLineRef.current;
+      const bottomLine = bottomLineRef.current;
       const icon = iconRef.current;
       const textInner = textInnerRef.current;
-      if (!panel || !plusH || !plusV || !icon || !textInner) return;
+      if (!panel || !topLine || !midLine || !bottomLine || !icon || !textInner)
+        return;
 
       let preLayers: HTMLDivElement[] = [];
       if (preContainer) {
@@ -98,8 +103,14 @@ const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 
       const offscreen = position === "left" ? -100 : 100;
       gsap.set([panel, ...preLayers], { xPercent: offscreen });
-      gsap.set(plusH, { transformOrigin: "50% 50%", rotate: 0 });
-      gsap.set(plusV, { transformOrigin: "50% 50%", rotate: 90 });
+      // hamburger start: three horizontal lines
+      gsap.set([topLine, midLine, bottomLine], {
+        transformOrigin: "50% 50%",
+        rotate: 0,
+      });
+      gsap.set(topLine, { yPercent: -40 });
+      gsap.set(midLine, { yPercent: 0, opacity: 1 });
+      gsap.set(bottomLine, { yPercent: 40 });
       gsap.set(icon, { rotate: 0, transformOrigin: "50% 50%" });
       gsap.set(textInner, { yPercent: 0 });
       if (toggleBtnRef.current)
@@ -296,23 +307,83 @@ const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   }, [position]);
 
   const animateIcon = useCallback((opening: boolean) => {
-    const icon = iconRef.current;
-    if (!icon) return;
+    const topLine = topLineRef.current;
+    const midLine = midLineRef.current;
+    const bottomLine = bottomLineRef.current;
+    if (!topLine || !midLine || !bottomLine) return;
     spinTweenRef.current?.kill();
+
     if (opening) {
-      spinTweenRef.current = gsap.to(icon, {
-        rotate: 225,
-        duration: 0.8,
-        ease: "power4.out",
-        overwrite: "auto",
-      });
+      // hamburger -> cross
+      spinTweenRef.current = gsap.timeline({ overwrite: "auto" })
+        .to(
+          midLine,
+          {
+            opacity: 0,
+            duration: 0.2,
+            ease: "power2.out",
+          },
+          0,
+        )
+        .to(
+          topLine,
+          {
+            yPercent: 0,
+            rotate: 45,
+            duration: 0.35,
+            ease: "power3.out",
+          },
+          0,
+        )
+        .to(
+          bottomLine,
+          {
+            yPercent: 0,
+            rotate: -45,
+            duration: 0.35,
+            ease: "power3.out",
+          },
+          0,
+        );
     } else {
-      spinTweenRef.current = gsap.to(icon, {
-        rotate: 0,
-        duration: 0.35,
-        ease: "power3.inOut",
-        overwrite: "auto",
-      });
+      // cross -> hamburger
+      spinTweenRef.current = gsap.timeline({ overwrite: "auto" })
+        .to(
+          [topLine, bottomLine],
+          {
+            rotate: 0,
+            duration: 0.3,
+            ease: "power3.inOut",
+          },
+          0,
+        )
+        .to(
+          topLine,
+          {
+            yPercent: -40,
+            duration: 0.3,
+            ease: "power3.inOut",
+          },
+          0,
+        )
+        .to(
+          bottomLine,
+          {
+            yPercent: 40,
+            duration: 0.3,
+            ease: "power3.inOut",
+          },
+          0,
+        )
+        .to(
+          midLine,
+          {
+            opacity: 1,
+            duration: 0.2,
+            ease: "power2.out",
+          },
+          0.1,
+        );
     }
   }, []);
 
@@ -487,8 +558,9 @@ const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
             </span>
           </span>
           <span ref={iconRef} className="sm-icon" aria-hidden="true">
-            <span ref={plusHRef} className="sm-icon-line" />
-            <span ref={plusVRef} className="sm-icon-line sm-icon-line-v" />
+            <span ref={topLineRef} className="sm-icon-line" />
+            <span ref={midLineRef} className="sm-icon-line" />
+            <span ref={bottomLineRef} className="sm-icon-line" />
           </span>
         </button>
       </header>

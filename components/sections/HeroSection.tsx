@@ -6,12 +6,15 @@ export function HeroSection() {
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,#e2e4ea_0,transparent_55%),radial-gradient(circle_at_bottom,#e2e4ea_0,transparent_55%)] opacity-70" />
 
       <div className="flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between">
-        <div className="space-y-4">
-          <h1
-            className={`${montserrat.className} text-5xl md:text-7xl font-black leading-[0.9] uppercase tracking-[0.03em] text-brand-dark`}
-          >
-            TO BE.
-          </h1>
+        <div className="space-y-2">
+          <div className="inline-block">
+            <h1
+              className={`${montserrat.className} inline-block text-5xl md:text-7xl font-black leading-[0.9] uppercase tracking-[-0.05em] text-brand-dark`}
+            >
+              TO BE.
+            </h1>
+            <div className="mt-2 h-2 w-full bg-brand-lime" />
+          </div>
           <p
             className={`${tomorrow.className} max-w-md text-base md:text-lg leading-relaxed text-brand-dark/80`}
           >

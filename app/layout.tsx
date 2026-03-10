@@ -24,7 +24,7 @@ export default function RootLayout({
       <body
         className={`${tomorrow.className} antialiased bg-bg-offwhite text-brand-dark`}
       >
-        <div className="min-h-screen bg-bg-offwhite bg-[url('/Background%20website.png')] bg-cover bg-fixed bg-center">
+        <div className="min-h-screen bg-bg-offwhite bg-[url('/Background%20website.png')] bg-cover bg-center">
           <Header />
           <div className="pt-20">
             <HeroSection />
