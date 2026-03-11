@@ -22,9 +22,9 @@
   left: 0;
   width: 100%;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 2em;
+  justify-content: center;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
   background: transparent;
   pointer-events: none;
   z-index: 20;
@@ -32,6 +32,44 @@
 
 .staggered-menu-header > * {
   pointer-events: auto;
+}
+
+.staggered-menu-header-inner {
+  width: 100%;
+  max-width: 72rem; /* match main content width */
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .staggered-menu-header-inner {
+    padding: 0 2rem;
+  }
+}
+
+.staggered-menu-header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0),
+    #343231,
+    rgba(255, 255, 255, 0)
+  );
+  pointer-events: none;
+}
+
+.staggered-menu-wrapper[data-scrolled] .staggered-menu-header {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .sm-logo {
