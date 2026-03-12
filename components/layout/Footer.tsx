@@ -4,7 +4,7 @@ export function Footer() {
   return (
     <footer
       id="contact"
-      className="mt-24 md:mt-28 border-t border-bg-light-line/60 bg-background/90 pt-6 pb-10 text-xs text-brand-dark/80"
+      className="mt-24 md:mt-28 border-t border-bg-light-line/60 bg-bg-offwhite/90 pt-6 pb-10 text-xs text-brand-dark/80"
     >
       <div className="mx-auto flex max-w-6xl flex-col gap-10 px-6 md:flex-row md:justify-between md:px-8">
         <div className="space-y-3">
