@@ -180,7 +180,8 @@
   width: 16px;
   height: 100%;
   background: #92b5fb; /* light blue accent */
-  z-index: 1;
+  z-index: 11; /* above panel background, below content if needed */
+  pointer-events: none;
 }
 
 [data-position='left'] .staggered-menu-panel {
