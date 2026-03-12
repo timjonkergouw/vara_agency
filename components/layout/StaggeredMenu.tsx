@@ -73,7 +73,7 @@ const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   const [textLines, setTextLines] = useState<string[]>(["Menu", "Close"]);
 
   const openTlRef = useRef<gsap.core.Timeline | null>(null);
-  const closeTweenRef = useRef<gsap.core.Tween | null>(null);
+  const closeTweenRef = useRef<gsap.core.Tween | gsap.core.Timeline | null>(null);
   const spinTweenRef = useRef<gsap.core.Tween | gsap.core.Timeline | null>(
     null,
   );
@@ -107,7 +107,8 @@ const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
       const offscreen = position === "left" ? -100 : 100;
       gsap.set([panel, ...preLayers], { xPercent: offscreen });
       if (sideAccent) {
-        gsap.set(sideAccent, { xPercent: -100 });
+        // start just outside the panel so it can slide in
+        gsap.set(sideAccent, { x: -16 });
       }
       // hamburger start: three horizontal lines
       gsap.set([topLine, midLine, bottomLine], {
@@ -194,8 +195,8 @@ const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
     if (sideAccent) {
       tl.fromTo(
         sideAccent,
-        { xPercent: -100 },
-        { xPercent: 0, duration: 0.3, ease: "power3.out" },
+        { x: -16 },
+        { x: 0, duration: 0.3, ease: "power3.out" },
         panelInsertTime + panelDuration + 0.05,
       );
     }
@@ -327,7 +328,7 @@ const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
           defaults: { ease: "power3.in" },
           onComplete,
         })
-        .to(sideAccent, { xPercent: -100, duration: 0.18 })
+        .to(sideAccent, { x: -16, duration: 0.18 })
         .to(all, { xPercent: offscreen, duration: 0.32 }, ">-0.02");
     } else {
       closeTweenRef.current = gsap.to(all, {
