@@ -177,10 +177,10 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 10px;
+  width: 16px;
   height: 100%;
   background: #92b5fb; /* light blue accent */
-  transform: translateX(-100%);
+  z-index: 1;
 }
 
 [data-position='left'] .staggered-menu-panel {
