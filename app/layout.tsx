@@ -21,10 +21,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+        />
+      </head>
       <body
-        className={`${tomorrow.className} antialiased bg-bg-offwhite text-brand-dark`}
+        className={`${tomorrow.className} antialiased bg-bg-offwhite text-brand-dark overflow-x-hidden`}
       >
-        <div className="min-h-screen bg-bg-offwhite bg-[url('/Background%20website.png')] bg-cover bg-center">
+        <div className="min-h-screen bg-bg-offwhite bg-[url('/Background%20website.png')] bg-cover bg-center overflow-x-hidden">
           <Header />
           <div className="pt-20">
             <HeroSection />

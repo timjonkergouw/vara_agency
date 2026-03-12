@@ -4,7 +4,7 @@ export function Footer() {
   return (
     <footer
       id="contact"
-      className="border-t border-bg-light-line/60 bg-background/90 pt-12 pb-10 text-xs text-brand-dark/80"
+      className="mt-24 md:mt-28 border-t border-bg-light-line/60 bg-background/90 pt-6 pb-10 text-xs text-brand-dark/80"
     >
       <div className="mx-auto flex max-w-6xl flex-col gap-10 px-6 md:flex-row md:justify-between md:px-8">
         <div className="space-y-3">
@@ -64,7 +64,7 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="relative mx-auto mt-10 flex max-w-6xl items-end justify-between px-6 md:px-8">
+      <div className="relative mx-auto mt-4 flex max-w-6xl items-end justify-between px-6 md:px-8">
         <div className={`${tomorrow.className} space-y-2`}>
           <p className="text-[11px] uppercase tracking-[0.24em] text-brand-dark/60">
             Branding for the next generation of startups
@@ -73,9 +73,11 @@ export function Footer() {
             Socials
           </p>
         </div>
-        <div className="pointer-events-none select-none text-[7rem] font-semibold leading-none tracking-[0.24em] text-brand-dark/4 md:text-[8rem]">
-          VARA
-        </div>
+        <img
+          src="/vara logo.png"
+          alt="VARA logo"
+          className="pointer-events-none select-none h-20 w-auto opacity-50 md:h-28"
+        />
       </div>
     </footer>
   );

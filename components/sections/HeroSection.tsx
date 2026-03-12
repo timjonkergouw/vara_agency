@@ -23,11 +23,13 @@ export function HeroSection() {
         </div>
 
         <div className="mt-4 md:mt-0">
-          <button
-            className={`${tomorrow.className} rounded-sm bg-brand-lime px-7 py-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-brand-dark shadow-[0_8px_0_rgba(0,0,0,0.12)] transition hover:-translate-y-0.5 hover:shadow-[0_10px_0_rgba(0,0,0,0.16)]`}
-          >
-            Discover more+
-          </button>
+          <a href="#about">
+            <button
+              className={`${tomorrow.className} rounded-sm bg-brand-lime px-7 py-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-brand-dark shadow-[0_8px_0_rgba(0,0,0,0.12)] transition hover:-translate-y-0.5 hover:shadow-[0_10px_0_rgba(0,0,0,0.16)]`}
+            >
+              Discover more+
+            </button>
+          </a>
         </div>
       </div>
     </section>

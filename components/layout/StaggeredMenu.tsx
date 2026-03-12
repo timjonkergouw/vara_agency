@@ -63,6 +63,7 @@ const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   const panelRef = useRef<HTMLDivElement | null>(null);
   const preLayersRef = useRef<HTMLDivElement | null>(null);
   const preLayerElsRef = useRef<HTMLDivElement[]>([]);
+  const sideAccentRef = useRef<HTMLDivElement | null>(null);
   const topLineRef = useRef<HTMLSpanElement | null>(null);
   const midLineRef = useRef<HTMLSpanElement | null>(null);
   const bottomLineRef = useRef<HTMLSpanElement | null>(null);
@@ -91,6 +92,7 @@ const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
       const bottomLine = bottomLineRef.current;
       const icon = iconRef.current;
       const textInner = textInnerRef.current;
+      const sideAccent = sideAccentRef.current;
       if (!panel || !topLine || !midLine || !bottomLine || !icon || !textInner)
         return;
 
@@ -104,6 +106,9 @@ const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 
       const offscreen = position === "left" ? -100 : 100;
       gsap.set([panel, ...preLayers], { xPercent: offscreen });
+      if (sideAccent) {
+        gsap.set(sideAccent, { xPercent: -100 });
+      }
       // hamburger start: three horizontal lines
       gsap.set([topLine, midLine, bottomLine], {
         transformOrigin: "50% 50%",
@@ -123,6 +128,7 @@ const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   const buildOpenTimeline = useCallback(() => {
     const panel = panelRef.current;
     const layers = preLayerElsRef.current;
+    const sideAccent = sideAccentRef.current;
     if (!panel) return null;
 
     openTlRef.current?.kill();
@@ -183,6 +189,16 @@ const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
       { xPercent: 0, duration: panelDuration, ease: "power4.out" },
       panelInsertTime,
     );
+
+    // side accent bar slides in after panel is fully visible
+    if (sideAccent) {
+      tl.fromTo(
+        sideAccent,
+        { xPercent: -100 },
+        { xPercent: 0, duration: 0.3, ease: "power3.out" },
+        panelInsertTime + panelDuration + 0.05,
+      );
+    }
 
     if (itemEls.length) {
       const itemsStartRatio = 0.15;
@@ -268,43 +284,60 @@ const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
 
     const panel = panelRef.current;
     const layers = preLayerElsRef.current;
+    const sideAccent = sideAccentRef.current;
     if (!panel) return;
 
     const all = [...layers, panel];
     closeTweenRef.current?.kill();
     const offscreen = position === "left" ? -100 : 100;
-    closeTweenRef.current = gsap.to(all, {
-      xPercent: offscreen,
-      duration: 0.32,
-      ease: "power3.in",
-      overwrite: "auto",
-      onComplete: () => {
-        const itemEls = Array.from(
-          panel.querySelectorAll<HTMLElement>(".sm-panel-itemLabel"),
-        );
-        if (itemEls.length) {
-          gsap.set(itemEls, { yPercent: 140, rotate: 10 });
-        }
-        const numberEls = Array.from(
-          panel.querySelectorAll<HTMLElement>(
-            ".sm-panel-list[data-numbering] .sm-panel-item",
-          ),
-        );
-        if (numberEls.length) {
-          gsap.set(numberEls, { "--sm-num-opacity": 0 });
-        }
-        const socialTitle = panel.querySelector<HTMLElement>(".sm-socials-title");
-        const socialLinks = Array.from(
-          panel.querySelectorAll<HTMLElement>(".sm-socials-link"),
-        );
-        if (socialTitle) gsap.set(socialTitle, { opacity: 0 });
-        if (socialLinks.length) gsap.set(socialLinks, {
+
+    const onComplete = () => {
+      const itemEls = Array.from(
+        panel.querySelectorAll<HTMLElement>(".sm-panel-itemLabel"),
+      );
+      if (itemEls.length) {
+        gsap.set(itemEls, { yPercent: 140, rotate: 10 });
+      }
+      const numberEls = Array.from(
+        panel.querySelectorAll<HTMLElement>(
+          ".sm-panel-list[data-numbering] .sm-panel-item",
+        ),
+      );
+      if (numberEls.length) {
+        gsap.set(numberEls, { "--sm-num-opacity": 0 });
+      }
+      const socialTitle = panel.querySelector<HTMLElement>(".sm-socials-title");
+      const socialLinks = Array.from(
+        panel.querySelectorAll<HTMLElement>(".sm-socials-link"),
+      );
+      if (socialTitle) gsap.set(socialTitle, { opacity: 0 });
+      if (socialLinks.length)
+        gsap.set(socialLinks, {
           y: 25,
           opacity: 0,
         });
-        busyRef.current = false;
-      },
-    });
+      busyRef.current = false;
+    };
+
+    if (sideAccent) {
+      // first hide side accent quickly, then close panel/layers
+      closeTweenRef.current = gsap
+        .timeline({
+          overwrite: "auto",
+          defaults: { ease: "power3.in" },
+          onComplete,
+        })
+        .to(sideAccent, { xPercent: -100, duration: 0.18 })
+        .to(all, { xPercent: offscreen, duration: 0.32 }, ">-0.02");
+    } else {
+      closeTweenRef.current = gsap.to(all, {
+        xPercent: offscreen,
+        duration: 0.32,
+        ease: "power3.in",
+        overwrite: "auto",
+        onComplete,
+      });
+    }
   }, [position]);
 
   const animateIcon = useCallback((opening: boolean) => {
@@ -544,16 +577,16 @@ const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
       </div>
       <header className="staggered-menu-header" aria-label="Main navigation header">
         <div className="staggered-menu-header-inner">
-          <div className="sm-logo" aria-label="VARA Logo">
+          <a href="/" className="sm-logo" aria-label="Go to home">
             <img
               src={logoUrl || "/vara logo.png"}
               alt="VARA Logo"
               className="sm-logo-img"
               draggable={false}
-              width={110}
-              height={24}
+              width={140}
+              height={32}
             />
-          </div>
+          </a>
           <button
             ref={toggleBtnRef}
             className="sm-toggle"
@@ -587,6 +620,7 @@ const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
         className="staggered-menu-panel"
         aria-hidden={!open}
       >
+        <div ref={sideAccentRef} className="sm-side-accent" aria-hidden="true" />
         <div className="sm-panel-inner">
           <ul
             className="sm-panel-list"

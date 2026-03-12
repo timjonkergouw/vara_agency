@@ -9,7 +9,7 @@ export function AboutSection() {
         <img
           src="/vara logo lime.png"
           alt="VARA lime logo"
-          className="pointer-events-none select-none absolute bottom-0 left-0 h-32 w-auto -translate-x-[240px] transform object-contain md:bottom-0 md:h-44"
+          className="pointer-events-none select-none absolute bottom-0 left-0 h-32 w-auto -translate-x-[160px] transform object-contain md:bottom-0 md:h-44 md:-translate-x-[280px]"
         />
 
         <div className="relative z-10 max-w-xl space-y-4">
