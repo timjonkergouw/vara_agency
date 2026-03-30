@@ -5,7 +5,7 @@ const menuItems = [
   { label: "About", ariaLabel: "Learn about us", link: "/#about" },
   { label: "Services", ariaLabel: "View our services", link: "/#services" },
   { label: "Process", ariaLabel: "View our process", link: "/#process" },
-  { label: "Contact", ariaLabel: "Get in touch", link: "/#contact" },
+  { label: "Contact", ariaLabel: "Get in touch", link: "/contact" },
 ];
 
 const socialItems = [
