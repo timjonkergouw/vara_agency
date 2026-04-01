@@ -47,7 +47,7 @@ const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   displaySocials = true,
   displayItemNumbering = true,
   className,
-  logoUrl = "/vara logo.png",
+  logoUrl = "/varalogoblauw.png",
   menuButtonColor = "#343231", // brand black
   openMenuButtonColor = "#343231",
   accentColor = "#92B5FB", // VARA brand light blue
@@ -580,7 +580,7 @@ const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
         <div className="staggered-menu-header-inner">
           <a href="/" className="sm-logo" aria-label="Go to home">
             <img
-              src={logoUrl || "/vara logo.png"}
+              src={logoUrl || "/varalogoblauw.png"}
               alt="VARA Logo"
               className="sm-logo-img"
               draggable={false}

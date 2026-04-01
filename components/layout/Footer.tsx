@@ -74,7 +74,7 @@ export function Footer() {
           </p>
         </div>
         <img
-          src="/vara logo.png"
+          src="/varalogoblauw.png"
           alt="VARA logo"
           className="pointer-events-none select-none h-20 w-auto opacity-50 md:h-28"
         />
